@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 jobs:
   build-and-deploy:
-    runs-on: ubutun-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
