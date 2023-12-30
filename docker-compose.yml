@@ -1,0 +1,13 @@
+version: '3'
+services:
+  app:
+    image: aqg-onmt:latest
+    ports:
+      - 5000:5000
+    restart: always
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge

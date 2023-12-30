@@ -23,7 +23,7 @@ def doGenerate():
     prepare_featured_input(materials, output_file_name="free_input.txt", manual_ne_postag=False, lower=False, seed=42)
     print("prepared data")
     os.system(
-        f'onmt_translate -model models/checkpoints/onmt/gru_045_step_32100.pt \
+        f'onmt_translate -model models/final/gru_037_cased_step_32100.pt \
             -src free_input.txt \
             -output free_input_pred.txt -replace_unk \
             -beam_size 2 \
