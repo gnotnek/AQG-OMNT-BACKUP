@@ -4,7 +4,7 @@ on:
     branches: [ "master" ]
   workflow_dispatch:
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,12 +21,24 @@ jobs:
 
       - name: Tag and Push Docker Images
         run: |
-          docker tag aqg-onmt gnotnek013/aqg-omnt
-          docker push aqg-onmt gnotnek013/aqg-omnt
-        env: 
+          docker tag flask-app ${DOCKER_HUB_USERNAME}/flask-app
+          docker push ${DOCKER_HUB_USERNAME}/flask-app
+        env:
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
           
-      - name: Deploy Application & Database 
-        run: |
-          docker-compose -f ./docker-compose.yml up -d 
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: SSH into GCP VM
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.GCP_VM_IP }}
+        username: ${{ secrets.GCP_VM_USERNAME }}
+        key: ${{ secrets.GCP_VM_SSH_KEY }}
+
+        script: |
+          docker pull ${DOCKER_HUB_USERNAME}/aqg-omnt
+          docker stop aqg-omnt || true
+          docker rm aqg-omnt || true
+          docker run -d -p 5000:5000 --name aqg-omnt ${DOCKER_HUB_USERNAME}/aqg-omnt
