@@ -12,6 +12,21 @@ jobs:
         run: |
           docker build . --file Dockerfile --tag aqg-onmt
           
+      - name: Login to Docker Image
+        run: |
+          echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Tag and Push Docker Images
+        run: |
+          docker tag aqg-onmt gnotnek013/aqg-omnt
+          docker push aqg-onmt gnotnek013/aqg-omnt
+        env: 
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          
       - name: Deploy Application & Database 
         run: |
           docker-compose -f ./docker-compose.yml up -d 
