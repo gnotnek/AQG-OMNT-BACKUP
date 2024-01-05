@@ -21,7 +21,7 @@ jobs:
 
       - name: Tag and Push Docker Images
         run: |
-          docker tag flask-app ${DOCKER_HUB_USERNAME}/flask-app
+          docker tag aqg-onmt ${DOCKER_HUB_USERNAME}/aqg-onmt
           docker push ${DOCKER_HUB_USERNAME}/flask-app
         env:
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
