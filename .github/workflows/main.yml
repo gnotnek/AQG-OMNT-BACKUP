@@ -22,7 +22,7 @@ jobs:
       - name: Tag and Push Docker Images
         run: |
           docker tag aqg-onmt ${DOCKER_HUB_USERNAME}/aqg-onmt
-          docker push ${DOCKER_HUB_USERNAME}/flask-app
+          docker push ${DOCKER_HUB_USERNAME}/aqg-onmt
         env:
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
