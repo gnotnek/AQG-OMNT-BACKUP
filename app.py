@@ -38,11 +38,11 @@ def doGenerate():
         ind=0
         for val in taxs :
             questions = []
-            for i in enumerate(predictions) :
+            for i in predictions:
                 deleted = i.replace('\n','')
                 questions.append(deleted)
                 predicteds.append({'c' : val, 'name' : taxs_name[i],'q' : questions})
-                # i+=1
+                i+=1
         return jsonify(predicteds)
 
 if __name__ == '__main__':
