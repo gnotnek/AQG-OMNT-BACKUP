@@ -3,10 +3,11 @@ import random
 
 import numpy as np
 
-from src.preprocess.call_external_api import get_ner, get_pos_tag
+from src.preprocess.call_external_api import get_ner
 from src.preprocess.features import NONE_NER_POS, is_end_punctuations, create_ner_tensor, create_postags_tensor
 from src.util.file_handler import print_input_along_feature
 from src.util.tokenizer import tokenize, normalize_string
+from src.preprocess.nlp_id_utils import tokenize, get_pos_tag
 
 
 def sentenize(tokenized_input, entities, postags):
