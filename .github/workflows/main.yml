@@ -40,5 +40,5 @@ jobs:
         key: ${{ secrets.GCP_VM_SSH_KEY }}
 
         script: |
-          docker pull ${DOCKER_HUB_USERNAME}/aqg-onmt:latest
-          docker run -d -p 5050:5050 --name aqg-onmt "${DOCKER_HUB_USERNAME}/aqg-onmt:latest"
+          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/aqg-onmt:latest
+          docker run -d -p 5050:5050 --name aqg-onmt ${{ secrets.DOCKER_HUB_USERNAME }}/aqg-onmt:latest
