@@ -40,7 +40,7 @@ jobs:
         key: ${{ secrets.GCP_VM_SSH_KEY }}
 
         script: |
-          docker pull ${DOCKER_HUB_USERNAME}/aqg-omnt
-          docker stop aqg-omnt || true
-          docker rm aqg-omnt || true
-          docker run -d -p 5050:5050 --name aqg-omnt ${DOCKER_HUB_USERNAME}/aqg-omnt
+          docker pull ${DOCKER_HUB_USERNAME}/aqg-onmt
+          docker stop aqg-onmt || true
+          docker rm aqg-onmt || true
+          docker run -d -p 5050:5050 --name aqg-omnt ${DOCKER_HUB_USERNAME}/aqg-onmt
