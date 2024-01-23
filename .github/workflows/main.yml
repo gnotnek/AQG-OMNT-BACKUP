@@ -43,4 +43,4 @@ jobs:
           docker pull ${DOCKER_HUB_USERNAME}/aqg-omnt
           docker stop aqg-omnt || true
           docker rm aqg-omnt || true
-          docker run -d -p 5000:5000 --name aqg-omnt ${DOCKER_HUB_USERNAME}/aqg-omnt
+          docker run -d -p 5050:5050 --name aqg-omnt ${DOCKER_HUB_USERNAME}/aqg-omnt
