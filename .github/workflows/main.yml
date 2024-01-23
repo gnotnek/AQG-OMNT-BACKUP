@@ -41,6 +41,4 @@ jobs:
 
         script: |
           docker pull ${DOCKER_HUB_USERNAME}/aqg-onmt
-          docker stop aqg-onmt || true
-          docker rm aqg-onmt || true
           docker run -d -p 5050:5050 --name aqg-onmt ${DOCKER_HUB_USERNAME}/aqg-onmt
