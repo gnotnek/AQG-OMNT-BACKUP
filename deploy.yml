@@ -1,9 +1,14 @@
 ---
+apiVersion: "v1"
+kind: "Namespace"
+metadata:
+  name: "aqg-app"
+---
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
   name: "aqg-app"
-  namespace: "default"
+  namespace: "aqg-app"
   labels:
     app: "aqg-app"
 spec:
@@ -18,13 +23,13 @@ spec:
     spec:
       containers:
       - name: "aqg-onmt-1"
-        image: "gnotnek013/aqg-onmt:latest"
+        image: "gnotnek013/aqg-onmt"
 ---
 apiVersion: "autoscaling/v2"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "aqg-app-hpa-ogdq"
-  namespace: "default"
+  name: "aqg-app-hpa-mth8"
+  namespace: "aqg-app"
   labels:
     app: "aqg-app"
 spec:
