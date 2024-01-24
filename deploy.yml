@@ -2,24 +2,24 @@
 apiVersion: "v1"
 kind: "Namespace"
 metadata:
-  name: "aqg-app"
+  name: "aqg-server"
 ---
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: "aqg-app"
-  namespace: "aqg-app"
+  name: "aqg-web-server"
+  namespace: "aqg-server"
   labels:
-    app: "aqg-app"
+    app: "aqg-web-server"
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: "aqg-app"
+      app: "aqg-web-server"
   template:
     metadata:
       labels:
-        app: "aqg-app"
+        app: "aqg-web-server"
     spec:
       containers:
       - name: "aqg-onmt-1"
@@ -28,16 +28,16 @@ spec:
 apiVersion: "autoscaling/v2"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "aqg-app-hpa-mth8"
-  namespace: "aqg-app"
+  name: "aqg-web-server-hpa-sgur"
+  namespace: "aqg-server"
   labels:
-    app: "aqg-app"
+    app: "aqg-web-server"
 spec:
   scaleTargetRef:
     kind: "Deployment"
-    name: "aqg-app"
+    name: "aqg-web-server"
     apiVersion: "apps/v1"
-  minReplicas: 1
+  minReplicas: 3
   maxReplicas: 5
   metrics:
   - type: "Resource"
