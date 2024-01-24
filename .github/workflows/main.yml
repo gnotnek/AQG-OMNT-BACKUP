@@ -5,8 +5,8 @@ on:
   workflow_dispatch:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER: aqg-cluster    # cluster name
-  GKE_ZONE: asia-southeast2   # cluster zone
+  GKE_CLUSTER: aqg-cluster2    # cluster name
+  GKE_ZONE: asia-southeast2-a   # cluster zone
 
 jobs:
   build:
