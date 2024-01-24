@@ -1,0 +1,43 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "aqg-app"
+  namespace: "default"
+  labels:
+    app: "aqg-app"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "aqg-app"
+  template:
+    metadata:
+      labels:
+        app: "aqg-app"
+    spec:
+      containers:
+      - name: "aqg-onmt-1"
+        image: "gnotnek013/aqg-onmt:latest"
+---
+apiVersion: "autoscaling/v2"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "aqg-app-hpa-ogdq"
+  namespace: "default"
+  labels:
+    app: "aqg-app"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "aqg-app"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      target:
+        type: "Utilization"
+        averageUtilization: 80

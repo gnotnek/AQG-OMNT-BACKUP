@@ -3,6 +3,11 @@ on:
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: aqg-cluster    # cluster name
+  GKE_ZONE: asia-southeast2   # cluster zone
+
 jobs:
   build:
     name: build and deliver artifact
@@ -29,18 +34,22 @@ jobs:
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
           
   deploy:
+    name: deploy into GKE
     runs-on: ubuntu-latest
     needs: build
     steps:
-    - name: SSH into GCP VM
-      uses: appleboy/ssh-action@master
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
       with:
-        host: ${{ secrets.GCP_VM_IP }}
-        username: ${{ secrets.GCP_VM_USERNAME }}
-        key: ${{ secrets.GCP_VM_SSH_KEY }}
+        credentials_json: '${{ secrets.GKE_SA_KEY }}'
 
-        script: |
-          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/aqg-onmt:latest
-          docker stop aqg-onmt || true
-          docker rm aqg-onmt || true
-          docker run -d -p 5050:5050 --name aqg-onmt ${{ secrets.DOCKER_HUB_USERNAME }}/aqg-onmt:latest
+    - name: Set up GKE credentials
+      uses: google-github-actions/get-gke-credentials@v0
+      with:
+        cluster_name: ${{ env.GKE_CLUSTER }}
+        location: ${{ env.GKE_ZONE }}
+    
+    - name: Deploy
+      run: |-
+        kubectl apply -f kubernetes/deploy.yml
+        kubectl get pods
