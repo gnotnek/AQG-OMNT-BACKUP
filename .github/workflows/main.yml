@@ -9,7 +9,17 @@ env:
   GKE_ZONE: asia-southeast2-a   # cluster zone
 
 jobs:
+  test:
+    name: test code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: test code
+        run: |
+          python test_app.py
+
   build:
+    needs: test
     name: build and deliver artifact
     runs-on: ubuntu-latest
     steps:
