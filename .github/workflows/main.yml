@@ -9,32 +9,18 @@ env:
   GKE_ZONE: asia-southeast2-a   # cluster zone
 
 jobs:
-  test:
-    name: test code
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: install depentence
-        run: |
-          pip install -r requirements.txt
-      
-      - name: run the app
-        run: |
-          python app.py
-          
-      - name: test code
-        run: |
-          python test_app.py
-
   build:
-    needs: test
-    name: build and deliver artifact
+    name: test, build, and deliver artifact
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
         run: |
           docker build . --file Dockerfile --tag aqg-onmt
+
+      - name: Test the Docker image
+        run: |
+          docker run aqg-onmt python -m unittest discover -s tests -p 'test_app.py'
           
       - name: Login to Docker Image
         run: |
