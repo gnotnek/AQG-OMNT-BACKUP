@@ -14,4 +14,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000
 
+RUN python test_app.py
+
 CMD ["python", "app.py"]
