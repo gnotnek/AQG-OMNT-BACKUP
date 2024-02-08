@@ -29,5 +29,5 @@ torch==1.6.0
 torchvision 
 Unidecode==1.1.1 
 urllib3==1.25.8
-nlp_id
+pytest
 git+https://github.com/Maluuba/nlg-eval.git@master
