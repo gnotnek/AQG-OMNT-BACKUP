@@ -14,6 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: install depentence
+        run: |
+          pip install -r requirements.txt
+      
+      - name: run the app
+        run: |
+          python app.py
+          
       - name: test code
         run: |
           python test_app.py
