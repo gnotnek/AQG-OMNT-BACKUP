@@ -1,4 +1,4 @@
-FROM python:3.8-slim
+FROM Ubuntu:20.4
 
 WORKDIR /usr/src/app
 
